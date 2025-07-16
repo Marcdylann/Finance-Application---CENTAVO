@@ -17,7 +17,7 @@ function AddTransaction() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form); // eventually you'll save to global state or DB
+    console.log(form); 
   };
 
   return (
