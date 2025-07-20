@@ -1,4 +1,6 @@
-import { useState } from 'react';
+// src/pages/AddTransaction.js
+import { useState, useContext } from 'react';
+import { TransactionContext } from '../context/TransactionContext';
 
 function AddTransaction() {
   const [form, setForm] = useState({
@@ -8,16 +10,26 @@ function AddTransaction() {
     type: 'income',
   });
 
+  // ✅ Correct function name pulled from context
+  const { addTransaction } = useContext(TransactionContext);
+
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form); 
+
+    const newTxn = {
+      ...form,
+      id: crypto.randomUUID(), // ✅ unique ID
+    };
+
+    addTransaction(newTxn); // ✅ call context function
+    setForm({ description: '', amount: '', date: '', type: 'income' }); // optional: clear form
   };
 
   return (
